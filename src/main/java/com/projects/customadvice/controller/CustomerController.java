@@ -22,26 +22,21 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id){
+    public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id) {
         log.info("[CustomerController - getCustomer]");
         return ResponseEntity.ok(customerService.getCustomer(id));
     }
 
     @PostMapping
-    public ResponseEntity<String> addCustomer(@RequestBody Customer customer){
+    public ResponseEntity<String> addCustomer(@RequestBody Customer customer) {
         log.info("[CustomerServiceImpl - addCustomer]");
         return ResponseEntity.ok(customerService.addCustomer(customer));
     }
 
     @PutMapping
-    public ResponseEntity<String> updateCustomer(@RequestBody Customer customer){
+    public ResponseEntity<String> updateCustomer(@RequestBody Customer customer) {
         log.info("[CustomerServiceImpl - updateCustomer]");
         return ResponseEntity.ok(customerService.updateCustomer(customer));
     }
 
-    @ExceptionHandler(value = CustomerAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleCustomerAlreadyExistsException(CustomerAlreadyExistsException ex){
-        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
-    }
 }

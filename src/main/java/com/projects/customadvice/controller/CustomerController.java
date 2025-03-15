@@ -1,14 +1,17 @@
 package com.projects.customadvice.controller;
 
+import com.projects.customadvice.exception.CustomerAlreadyExistsException;
 import com.projects.customadvice.model.Customer;
 import com.projects.customadvice.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.projects.customadvice.error.ErrorResponse;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/customer")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -18,21 +21,27 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("getCustomer/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id){
         log.info("[CustomerController - getCustomer]");
         return ResponseEntity.ok(customerService.getCustomer(id));
     }
 
-    @PostMapping("addCustomer")
+    @PostMapping
     public ResponseEntity<String> addCustomer(@RequestBody Customer customer){
         log.info("[CustomerServiceImpl - addCustomer]");
         return ResponseEntity.ok(customerService.addCustomer(customer));
     }
 
-    @PutMapping("updateCustomer")
-    public ResponseEntity<String> updateCustomer(Customer customer){
+    @PutMapping
+    public ResponseEntity<String> updateCustomer(@RequestBody Customer customer){
         log.info("[CustomerServiceImpl - updateCustomer]");
         return ResponseEntity.ok(customerService.updateCustomer(customer));
+    }
+
+    @ExceptionHandler(value = CustomerAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCustomerAlreadyExistsException(CustomerAlreadyExistsException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 }

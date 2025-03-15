@@ -1,0 +1,9 @@
+2025-03-09 19:26:58.569749+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+select c1_0.id,c1_0.address,c1_0.name from customer c1_0 where c1_0.id=? [42102-232]
+2025-03-09 19:32:29.763719+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found; SQL statement:
+select c1_0.id,c1_0.address,c1_0.name from customer c1_0 where c1_0.id=? [42102-232]
+2025-03-09 19:42:31.198652+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CUSTOMER" not found (this database is empty); SQL statement:
+select c1_0.id,c1_0.address,c1_0.name from customer c1_0 where c1_0.id=? [42104-232]
